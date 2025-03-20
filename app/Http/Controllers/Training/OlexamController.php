@@ -20,7 +20,20 @@ class OlexamController extends Controller
 
     public function examslist()
     {
-        $subs = DB::select("select id, test_title, qn_master_templ_id, start_date, end_date, duration FROM allocate_test WHERE is_active = 1");
+        $login_id = Auth::id();
+
+        $loginfo = DB::select("select class_id, Section FROM students WHERE is_deleted = 0 AND user_id=$login_id");
+        // echo "<pre>";
+        // print_r($loginfo);
+        // echo "</pre>";
+        // exit;
+        $clsid = $loginfo[0]->class_id;
+        $secn = $loginfo[0]->Section;
+
+        // echo $clsid . " MMMMMMMMMM   " . $login_id;
+        // exit;
+
+        $subs = DB::select("select id, test_title, qn_master_templ_id, start_date, end_date, duration FROM allocate_test WHERE is_active = 1 AND ((class_id=$clsid AND sec_id='". $secn . "') OR $login_id=1)");
 
         return datatables()->of($subs)
             ->addColumn('action', function ($selected) {
