@@ -606,6 +606,7 @@ class ComposerStaticInit63323b938e88098558e0fec59daab8c9
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Master\\AlloctestController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/AlloctestController.php',
         'App\\Http\\Controllers\\Master\\ContentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/ContentController.php',
+        'App\\Http\\Controllers\\Master\\QnbankController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/QnbankController.php',
         'App\\Http\\Controllers\\Master\\QuestionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/QuestionController.php',
         'App\\Http\\Controllers\\Master\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/RolesController.php',
         'App\\Http\\Controllers\\Master\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/Master/SubjectController.php',

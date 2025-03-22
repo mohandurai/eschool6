@@ -46,12 +46,12 @@ class HomeworkController extends Controller
     {
         $data['classlist'] = DB::table('student_class')->select('id','class')->where('school_id', '=', 1)->where( 'is_deleted', '=', '0')->get();
 
-        $data2 = DB::table('students')->select('user_id','first_name')->where( 'is_deleted', '=', '0')->get();
-        $result = $data2->toArray();
-        foreach($result as $arr) {
-            $student[$arr->user_id] = $arr->first_name;
-        }
-        return view('pages.training.homework.create', $data)->with('student',$student);
+        // $data2 = DB::table('students')->select('user_id','first_name')->where( 'is_deleted', '=', '0')->get();
+        // $result = $data2->toArray();
+        // foreach($result as $arr) {
+        //     $student[$arr->user_id] = $arr->first_name;
+        // }
+        return view('pages.training.homework.create', $data);
     }
 
     public function store(Request $request)
@@ -114,11 +114,7 @@ class HomeworkController extends Controller
      */
     public function homeworkindex()
     {
-        $stud_id = auth()->user()->id;
-        $data['homework'] = DB::select("select * FROM homework WHERE assign_to=0 OR student_id=$stud_id ORDER BY id DESC");
-        // print_r($data);
-        // exit;
-        return View::make('pages.training.homework.homeworkindex', $data);
+        return View::make('pages.training.homework.homeworkindex');
     }
 
     public function homework2list()
@@ -126,9 +122,19 @@ class HomeworkController extends Controller
         // echo $id;
         // exit;
         $stud_id = auth()->user()->id;
-        $projlab2 = DB::select("select id, title, class_id, sec_id, assign_to, student_id, status FROM homework WHERE (assign_to=0 OR student_id=$stud_id) ORDER BY id DESC");
+        $data3 = DB::table('students')->select('class_id','Section')->where( 'user_id', '=', $stud_id)->get();
+        $clsid = $data3[0]->class_id;
+        $secid = $data3[0]->Section;
 
-        return datatables()->of($projlab2)
+        if($stud_id == 1) {
+            $hwquery = DB::select("select id, title, class_id, sec_id, assign_to, student_id, status FROM homework ORDER BY sec_id, id DESC");
+        } else {
+            $hwquery = DB::select("select id, title, class_id, sec_id, assign_to, student_id, status FROM homework WHERE (class_id=$clsid) AND (sec_id = '$secid' OR sec_id = 'Z') ORDER BY sec_id, id DESC");
+        }
+        // echo $hwquery;
+        // exit;
+
+        return datatables()->of($hwquery)
         ->addColumn('action',function($selected){
             return
             '<a class="btn btn-success text-light" data-toggle="modal" id="mediumButton2" data-target="#mediumModal" data-attr="' . $selected->id . '/homeworksubmit" title="Submit Activity" alt="'. $selected->id . '" title="Click to Start Home Work Submit .....">Submit</i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-warning" title="Detailed View Record" href="'.$selected->id.'/homeworkview">Show</i></a>';

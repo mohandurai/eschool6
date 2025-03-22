@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="title">Select Section</label>
                 <select class="form-control" id="sec_id" name="sec_id">
-                    <option value="0" selected>Select Section</option>
+                    <option value="Z" selected>ALL</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
@@ -49,15 +49,6 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="title">Assign Student</label>
-                <select class="form-control" id="assign_to" name="assign_to">
-                    <option value="0" selected>ALL</option>
-                    @foreach($student as $id2 => $st)
-                        <option value="{{$id2}}">{{$st}}</option>
-                    @endforeach
-                </select>
-            </div>
 
             <div class="form-group">
                 <label` for="exampleFormControlSelect1">Activity Title</label>

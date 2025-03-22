@@ -37,8 +37,10 @@ use App\Http\Controllers\Auth\RbacController;
 use App\Http\Controllers\Reports\GradereportController;
 use App\Http\Controllers\Training\HomeworkController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\Master\QnbankController;
 
-use App\Http\Controllers\RazorpayPaymentController;
+use App\Http\Controllers\PdfController;
+// use App\Http\Controllers\RazorpayPaymentController;
 
 Route::get('/', function () {
     return view('pages.auth.login');
@@ -60,6 +62,18 @@ Route::middleware('auth')->group(function() {
     Route::get('dashboard', function () {
         return view('dashboard');
     });
+
+    Route::get('/view-pdf/{filename}', [PdfController::class, 'viewPdf'])->name('view.pdf');
+
+    Route::get('/qnbank/index', [QnbankController::class, 'index'])->name('qnbank.index');
+    Route::post('/qnbank/store', [QnbankController::class, 'store'])->name('qnbank.store');
+    Route::get('/qnbank/create', [QnbankController::class, 'create'])->name('qnbank.create');
+    Route::get('/qnbank/{id}/show', [QnbankController::class, 'show'])->name('qnbank.show');
+    Route::get('/qnbank/{id}/edit', [QnbankController::class, 'edit'])->name('qnbank.edit');
+    Route::post('/qnbank/update', [QnbankController::class, 'update'])->name('qnbank.update');
+    Route::get('/qnbank/{id}/destroy', [QnbankController::class, 'destroy'])->name('qnbank.destroy');
+    Route::get('/qnbanklist', [QnbankController::class, 'qnbanklist'])->name('qnbanklist');
+    Route::get('/qnbankview', [QnbankController::class, 'qnbankview'])->name('qnbankview');
 
     Route::get('/asset/index', [AssetController::class, 'index'])->name('asset.index');
     Route::post('/asset/store', [AssetController::class, 'store'])->name('asset.store');

@@ -53,12 +53,12 @@ class ProjlabController extends Controller
     {
         $data['classlist'] = DB::table('student_class')->select('id','class')->where('school_id', '=', 1)->where( 'is_deleted', '=', '0')->get();
 
-        $data2 = DB::table('students')->select('user_id','first_name')->where( 'is_deleted', '=', '0')->get();
-        $result = $data2->toArray();
-        foreach($result as $arr) {
-            $student[$arr->user_id] = $arr->first_name;
-        }
-        return view('pages.training.projlab.create', $data)->with('student',$student);
+        // $data2 = DB::table('students')->select('user_id','first_name')->where( 'is_deleted', '=', '0')->get();
+        // $result = $data2->toArray();
+        // foreach($result as $arr) {
+        //     $student[$arr->user_id] = $arr->first_name;
+        // }
+        return view('pages.training.projlab.create', $data);
     }
 
     public function store(Request $request)
@@ -123,10 +123,11 @@ class ProjlabController extends Controller
         public function studprojindex()
         {
             $stud_id = auth()->user()->id;
-            $data3 = DB::table('students')->select('class_id')->where( 'user_id', '=', $stud_id)->get();
+            $data3 = DB::table('students')->select('class_id','Section')->where( 'user_id', '=', $stud_id)->get();
             $clsid = $data3[0]->class_id;
+            $secid = $data3[0]->Section;
 
-            $stuQry = "SELECT * FROM `project_lab_activity` WHERE ((assign_to=0 AND student_id is Null) AND class_id = $clsid) OR (student_id = $stud_id AND class_id = $clsid) ORDER BY id DESC";
+            $stuQry = "select id, title, class_id, sec_id, student_id, status FROM project_lab_activity WHERE (class_id=$clsid) AND (sec_id = '$secid' OR sec_id = 'Z') ORDER BY sec_id, id DESC";
             // print_r($stuQry);
             // exit;
 
@@ -140,12 +141,20 @@ class ProjlabController extends Controller
             // echo $id;
             // exit;
             $stud_id = auth()->user()->id;
-            $data3 = DB::table('students')->select('class_id')->where( 'user_id', '=', $stud_id)->get();
+            $data3 = DB::table('students')->select('class_id','Section')->where( 'user_id', '=', $stud_id)->get();
             $clsid = $data3[0]->class_id;
+            $secid = $data3[0]->Section;
 
-            $projlab2 = "select id, title, class_id, assign_to, student_id, status FROM project_lab_activity WHERE ((assign_to=0 AND student_id is Null) AND class_id = $clsid) OR (student_id = $stud_id AND class_id = $clsid) ORDER BY id DESC";
+            if($stud_id == 1) {
+                $projlab6 = DB::select("select id, title, class_id, sec_id, student_id, status FROM project_lab_activity ORDER BY class_id, id DESC");
+            } else {
+                $projlab6 = DB::select("select id, title, class_id, sec_id, student_id, status FROM project_lab_activity WHERE (class_id=$clsid) AND (sec_id = '$secid' OR sec_id = 'Z') ORDER BY id DESC");
+            }
 
-            return datatables()->of($projlab2)
+            // echo $projlab2;
+            // exit;
+
+            return datatables()->of($projlab6)
             ->addColumn('action',function($selected){
                 return
                 '<div class="col-lg-12 margin-tb"><div class="pull-right"> <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton2" data-target="#mediumModal" data-attr="'. $selected->id . '/studsubmit" title="Submit Activity"  alt="'. $selected->id . '" title="Click to Start Project Submit .....">Submit</i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-warning" title="Detailed View Record" href="'.$selected->id.'/studview">Show</i></a>';
@@ -218,8 +227,8 @@ class ProjlabController extends Controller
         public function studsubmit($id)
         {
             $data['projLabAct'] = DB::table('project_lab_activity')->where('id', $id)->first();
-            print_r($data);
-            exit;
+            // print_r($data);
+            // exit;
             return View::make('pages.training.projlab.studsubmit', $data);
         }
 

@@ -118,7 +118,7 @@
                     <th>ID</th>
                     <th>Class</th>
                     <th>Title</th>
-                    <th>Assign To</th>
+                    <th>Section</th>
                     <th>Student ID</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -211,14 +211,15 @@ $(document).on('click', '#submitbtn', function(e) {
                 { data: 'id', name: 'id' },
                 { data: 'class_id', name: 'class_id' },
                 { data: 'title', name: 'title'},
-                { data: 'assign_to', render: function(data, type, row, meta) {
-                        if(row.assign_to == 0) {
-                            return "All";
-                        } else {
-                            return row.assign_to;
-                        }
-                    }
-                },
+                { data: 'sec_id', name: 'sec_id'},
+                // { data: 'assign_to', render: function(data, type, row, meta) {
+                //         if(row.assign_to == 0) {
+                //             return "All";
+                //         } else {
+                //             return row.assign_to;
+                //         }
+                //     }
+                // },
                 { data: 'student_id', name: 'student_id'},
                 { data: 'status', name: 'status'},
                 { data: 'action', name : 'action', orderable : true, searchable: true}

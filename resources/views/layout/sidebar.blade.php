@@ -104,7 +104,7 @@
                             <a href="{{ url('/homework/homeworkindex') }}" class="nav-link">Home Work Submit</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/questionbank/index') }}" class="nav-link">Question Bank</a>
+                            <a href="{{ url('/qnbankview') }}" class="nav-link">View Question Bank</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">Schedule Class</a>
@@ -180,7 +180,7 @@
                     <a href="{{ url('/alloctest/index') }}" class="nav-link">Allocate Test</a>
                     </li>
                     <li class="nav-item">
-                    <a href="#" class="nav-link">Question Bank</a>
+                    <a href="{{ url('/qnbank/index') }}" class="nav-link">Question Bank</a>
                     </li>
                 </ul>
                 </div>

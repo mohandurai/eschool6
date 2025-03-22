@@ -20,6 +20,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Master\\AlloctestController' => $baseDir . '/app/Http/Controllers/Master/AlloctestController.php',
     'App\\Http\\Controllers\\Master\\ContentController' => $baseDir . '/app/Http/Controllers/Master/ContentController.php',
+    'App\\Http\\Controllers\\Master\\QnbankController' => $baseDir . '/app/Http/Controllers/Master/QnbankController.php',
     'App\\Http\\Controllers\\Master\\QuestionController' => $baseDir . '/app/Http/Controllers/Master/QuestionController.php',
     'App\\Http\\Controllers\\Master\\RolesController' => $baseDir . '/app/Http/Controllers/Master/RolesController.php',
     'App\\Http\\Controllers\\Master\\SubjectController' => $baseDir . '/app/Http/Controllers/Master/SubjectController.php',
